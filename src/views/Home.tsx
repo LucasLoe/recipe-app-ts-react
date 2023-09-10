@@ -1,52 +1,32 @@
 import ViewLayout from "../components/layouts/ViewLayout";
+import { Recipe } from "../types";
+import Carousel from "../components/Carousel";
 
-type RecipeTitleProps = {
-	title: string;
+const sampleRecipeOne: Recipe = {
+	name: "super duper leckeres Rezept mit einem langen Namen",
+	duration: 25,
+	price: 23.32,
+	additionalInformation: ["vegan", "gluten-free"],
+	img: "./src/assets/example1.jpg",
+	url: "",
 };
 
-type RecipeShortInformationProps = {
-	price: number;
-	duration: number;
-	additionalInformation: string[];
-};
-const RecipeTitle = (props: RecipeTitleProps) => {
-	return <h2 className='text-xl font-thin my-1 '>{props.title}</h2>;
-};
-
-const RecipeShortInformation = (props: RecipeShortInformationProps) => {
-	return (
-		<div className=' w-full my-1 flex flex-row justify-between items-center'>
-			<p className='text-sm'>{`${props.duration} min`}</p>
-			<div>
-				{props.additionalInformation &&
-					props.additionalInformation.map((elem, idx) => {
-						return (
-							<span key={idx} className='mx-1 font-thin text-sm'>
-								{elem}
-							</span>
-						);
-					})}
-			</div>
-			<p className='text-sm'>{`${props.price} €`}</p>
-		</div>
-	);
+const sampleRecipeTwo: Recipe = {
+	name: "Hackbällchen",
+	duration: 7,
+	price: 59.32,
+	additionalInformation: ["meat"],
+	img: "./src/assets/example2.jpg",
+	url: "",
 };
 
 const Home = () => {
+	const recipeArray: Recipe[] = [sampleRecipeOne, sampleRecipeTwo];
+	console.log(recipeArray);
 	return (
 		<>
 			<ViewLayout>
-				<div className='relative w-full h-full text-amber-50'>
-					<img src='./src/assets/example1.jpg' className='w-full h-full object-cover'></img>
-					<div className='absolute bg-slate-800 top-[70%] w-full h-[30%] opacity-80 px-4 py-2 flex flex-col justify-between'>
-						<RecipeTitle title='super duper leckeres Rezept mit langem Namen' />
-						<RecipeShortInformation
-							price={23.32}
-							duration={12}
-							additionalInformation={["vegan", "info 2"]}
-						/>
-					</div>
-				</div>
+				<Carousel recipes={recipeArray} />
 			</ViewLayout>
 		</>
 	);
