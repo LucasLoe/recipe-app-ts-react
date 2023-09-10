@@ -12,7 +12,7 @@ const Views = {
 
 function App() {
 	const { currentGlobalView } = useView();
-	return <>{Views[currentGlobalView]}</>;
+	return <div className="max-w-lg">{Views[currentGlobalView]}</div>;
 }
 
 export default App;
