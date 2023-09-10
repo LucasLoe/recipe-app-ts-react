@@ -1,14 +1,17 @@
-import getRecipes from "./api/getRecipes";
+// import getRecipes from "./api/getRecipes";
+import Home from "./views/Home";
+import { GlobalViewKeys } from "./types";
+import { useView } from "./contexts/ViewContext";
+
+const Views = {
+	home: <Home />,
+	recipes: <Home />,
+	account: <Home />,
+} satisfies Record<GlobalViewKeys, JSX.Element>;
 
 function App() {
-	getRecipes({ type: "any", q: "chicken", from: 0, to: 10 }).then((data) => {
-		console.log(data);
-	}).catch;
-	return (
-		<>
-			<div>test</div>
-		</>
-	);
+	const { currentGlobalView } = useView();
+	return <>{Views[currentGlobalView]}</>;
 }
 
 export default App;
