@@ -10,16 +10,16 @@ const sampleRecipeOne: Recipe = {
 	duration: 25,
 	price: 23.32,
 	additionalInformation: ["vegan", "gluten-free"],
-	img: "./src/assets/example1.jpg",
+	img: "https://images.unsplash.com/photo-1612204078213-a227dba74093?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80",
 	url: "",
 };
 
 const sampleRecipeTwo: Recipe = {
-	name: "Hackbällchen",
+	name: "Vegane Hackbällchen",
 	duration: 7,
 	price: 59.32,
 	additionalInformation: ["meat"],
-	img: "./src/assets/example2.jpg",
+	img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80",
 	url: "",
 };
 
