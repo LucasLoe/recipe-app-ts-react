@@ -1,7 +1,9 @@
-import { Recipe } from "../types";
+import { RecipeFromApi } from "../types";
+import { Children, ReactNode } from "react";
 
 type RecipeSlideProps = {
-	recipe: Recipe;
+	recipe: RecipeFromApi;
+	children: ReactNode;
 };
 
 type RecipeTitleProps = {
@@ -9,18 +11,18 @@ type RecipeTitleProps = {
 };
 
 type RecipeShortInformationProps = {
-	price: number;
-	duration: number;
+	type: string[];
+	calories: number;
 	additionalInformation: string[];
 };
 const RecipeTitle = (props: RecipeTitleProps) => {
-	return <h2 className='text-3xl font-thin my-1 '>{props.title}</h2>;
+	return <h2 className='text-3xl font-thin my-1 w-fit'>{props.title}</h2>;
 };
 
 const RecipeShortInformation = (props: RecipeShortInformationProps) => {
 	return (
 		<div className=' w-full my-1 flex flex-row justify-between items-center text-md'>
-			<p className=''>{`${props.duration} min`}</p>
+			<p className=''>{`${Math.round(props.calories)} cals`}</p>
 			<div>
 				{props.additionalInformation &&
 					props.additionalInformation.map((elem, idx) => {
@@ -31,26 +33,34 @@ const RecipeShortInformation = (props: RecipeShortInformationProps) => {
 						);
 					})}
 			</div>
-			<p className=''>{`${props.price} €`}</p>
+			<p className=''>{`${props.type}`}</p>
 		</div>
 	);
 };
 
 const RecipeSlide = (props: RecipeSlideProps) => {
 	const { recipe } = props;
+
 	return (
 		<div className='relative w-full h-full text-amber-50'>
-			<img src={recipe.img} className='w-full h-full object-cover'></img>
-			<a href={recipe.url}>
-				<div className='absolute bg-slate-800 top-[70%] w-full h-[30%] opacity-80 px-4 py-4 flex flex-col justify-between'>
-					<RecipeTitle title={recipe.name} />
+			<img
+				src={recipe.images.LARGE?.url || recipe.images.REGULAR?.url}
+				className='w-full h-full object-cover'
+			></img>
+
+			<div className='absolute bg-slate-800 top-[70%] w-full h-[30%] opacity-80'>
+				<div className='w-full h-full relative px-4 py-4 flex flex-col justify-between'>
+					{props.children}
+					<a className="w-fit" href={recipe.url} target='_blank'>
+						<RecipeTitle title={recipe.label} />
+					</a>
 					<RecipeShortInformation
-						price={recipe.price}
-						duration={recipe.duration}
-						additionalInformation={recipe.additionalInformation}
+						type={recipe.mealType}
+						calories={recipe.calories}
+						additionalInformation={recipe.tags}
 					/>
 				</div>
-			</a>
+			</div>
 		</div>
 	);
 };

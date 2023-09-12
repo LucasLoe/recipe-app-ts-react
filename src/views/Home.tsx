@@ -1,32 +1,61 @@
 import ViewLayout from "../components/layouts/ViewLayout";
-import { Recipe } from "../types";
 import Carousel from "../components/Carousel";
+import getRecipes from "../api/getRecipes";
+import { RecipeFromApi } from "../types";
+import { useEffect, useState } from "react";
+import RecipeSlideController from "../components/RecipeSlideController";
+import { useUserData } from "../contexts/UserDataContext";
+import removeArrayDuplicates from "../functions/removeArrayDuplicates";
 
-const sampleRecipeOne: Recipe = {
-	name: "super duper leckeres Rezept mit einem langen Namen",
-	duration: 25,
-	price: 23.32,
-	additionalInformation: ["vegan", "gluten-free"],
-	img: "https://images.unsplash.com/photo-1612204078213-a227dba74093?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80",
-	url: "",
+type LoadingState = {
+	status: "loading" | "success" | "failure";
+	error: unknown | string;
 };
-
-const sampleRecipeTwo: Recipe = {
-	name: "Vegane Hackbällchen",
-	duration: 7,
-	price: 59.32,
-	additionalInformation: ["meat"],
-	img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80",
-	url: "",
-};
-
 const Home = () => {
-	const recipeArray: Recipe[] = [sampleRecipeOne, sampleRecipeTwo];
-	console.log(recipeArray);
+	const [recipeCollection, setRecipeCollection] = useState<RecipeFromApi[]>([]);
+	const { userData } = useUserData();
+	const [loadingState, setLoadingState] = useState<LoadingState>({
+		status: "loading",
+		error: "",
+	});
+
+	useEffect(() => {
+		async function fetchRecipeData() {
+			try {
+				const fetchedData = await getRecipes();
+				const filteredData = removeArrayDuplicates(fetchedData, userData.savedRecipes, 'uri');
+				setRecipeCollection(filteredData);
+				setLoadingState({
+					status: "success",
+					error: undefined,
+				});
+			} catch (error) {
+				console.log(
+					`The following error occured while trying to fetch recipe data from the Edamam API: ${error}`
+				);
+				setLoadingState({
+					status: "failure",
+					error: error,
+				});
+			}
+		}
+
+		fetchRecipeData();
+	}, []);
+
 	return (
 		<>
 			<ViewLayout>
-				<Carousel recipes={recipeArray} />
+				{loadingState.status === "success" ? (
+					<RecipeSlideController
+						recipeCollection={recipeCollection}
+						setRecipeCollection={setRecipeCollection}
+					/>
+				) : (
+					<div className='w-full h-full bg-slate-700 flex flex-row justify-center items-center text-2xl'>
+						Fetching your data... <br /> Please wait...
+					</div>
+				)}
 			</ViewLayout>
 		</>
 	);

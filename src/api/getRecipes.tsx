@@ -1,24 +1,17 @@
-async function getRecipes(params = {}) {
-	const url = "https://api.edamam.com/api/recipes/v2";
+import { DataFromApi, RecipeFromApi, ResponseFromApi } from "../types";
+import getApiUrl from "./getApiUrl";
 
-	//@ts-ignore
-	const app_id = import.meta.env.VITE_APP_ID;
-	//@ts-ignore
-	const app_key = import.meta.env.VITE_APP_KEY;
-	// Construct the query parameters including credentials
-	const queryParams = new URLSearchParams({ app_id, app_key, ...params });
-
-	// Append the query parameters to the URL
-	const apiUrl = `${url}?${queryParams.toString()}`;
-
+async function getRecipes(params = {}): Promise<RecipeFromApi[]> {
+	const apiUrl = getApiUrl(params, "recipes/v2");
 	try {
 		// Send a GET request to the API endpoint
 		const response = await fetch(apiUrl);
 
 		// Check if the request was successful (status code 200)
 		if (response.ok) {
-			const data = await response.json();
-			return data;
+			const data: ResponseFromApi = await response.json();
+			const recipeData: RecipeFromApi[] = data?.hits?.map((e: DataFromApi) => e.recipe);
+			return recipeData;
 		} else {
 			throw new Error(`Request failed with status: ${response.status}`);
 		}

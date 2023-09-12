@@ -1,10 +1,11 @@
 // src/components/Carousel.tsx
 import React, { useState } from "react";
 import RecipeSlide from "./RecipeSlide";
-import { Recipe } from "../types";
+import { RecipeFromApi } from "../types";
 
 interface CarouselProps {
-	recipes: Recipe[];
+	recipes: RecipeFromApi[];
+	setRecipeCollection: React.Dispatch<React.SetStateAction<RecipeFromApi[]>>;
 }
 
 const Carousel: React.FC<CarouselProps> = ({ recipes }) => {
