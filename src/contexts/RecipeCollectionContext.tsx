@@ -27,7 +27,6 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 
 	useEffect(() => {
 		async function fetchRecipeData(params = {}) {
-			console.log(`fetch request fired!`);
 			try {
 				const fetchedData = await getRecipes(params);
 				setRecipeCollection(fetchedData);
@@ -48,10 +47,10 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 
 		fetchRecipeData({
 			type: "public",
-			q: userData.userSettings.lastSearchQuery || "vegetarian",
+			q: userData.userSettings.lastSearchQuery || "meal",
 			random: true,
 		});
-	}, []);
+	}, [userData.userSettings]);
 
 	return (
 		<RecipeCollectionContext.Provider
