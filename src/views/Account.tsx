@@ -1,11 +1,27 @@
+import { useEffect, useState } from "react";
 import ViewLayout from "../components/layouts/ViewLayout";
 import { useUserData } from "../contexts/UserDataContext";
+import { useDebounce } from "../hooks/useDebounce";
 
 type AccountProps = {};
 
 const Account = (props: AccountProps) => {
 	const { userData, setUserData } = useUserData();
-	console.log(props);
+	const [searchQuery, setSearchQuery] = useState("");
+	const debouncedSearchQuery = useDebounce(searchQuery, 1000);
+
+	useEffect(() => {
+		console.log("debounced");
+		setUserData((prevUserData) => {
+			return {
+				...prevUserData,
+				userSettings: {
+					...prevUserData.userSettings,
+					lastSearchQuery: debouncedSearchQuery,
+				},
+			};
+		});
+	}, [debouncedSearchQuery]);
 
 	function clearLocalStorage() {
 		setUserData({
@@ -21,31 +37,19 @@ const Account = (props: AccountProps) => {
 		});
 	}
 
-	const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setUserData((prevUserData) => {
-			return {
-				...prevUserData,
-				userSettings: {
-					...prevUserData.userSettings,
-					lastSearchQuery: e.target.value,
-				},
-			};
-		});
-	};
-
 	return (
 		<ViewLayout>
-			<div>
+			<div className="flex flex-col justify-center items-center">
 				<button
-					className='w-fit px-2 py-1 rounded bg-red-600 text-amber-50'
+					className='w-fit px-2 py-1 my-2 rounded bg-red-600 text-amber-50'
 					onClick={() => clearLocalStorage()}
 				>
 					Clear Local Storage
 				</button>
 				<input
-					className=''
-					value={userData.userSettings.lastSearchQuery}
-					onChange={(e) => handleSearchQueryChange(e)}
+					className='px-4 py-2 my-2 outline outline-amber-50 outline-2 bg-transparent appearance-none rounded text-amber-50'
+					value={searchQuery || userData.userSettings.lastSearchQuery}
+					onChange={(e) => setSearchQuery(e.target.value)}
 				/>
 			</div>
 		</ViewLayout>

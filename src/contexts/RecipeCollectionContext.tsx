@@ -46,7 +46,11 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 			}
 		}
 
-		fetchRecipeData({ type: "public", q: userData.userSettings.lastSearchQuery, random: true });
+		fetchRecipeData({
+			type: "public",
+			q: userData.userSettings.lastSearchQuery || "vegetarian",
+			random: true,
+		});
 	}, []);
 
 	return (
