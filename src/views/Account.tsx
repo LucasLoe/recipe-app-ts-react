@@ -4,7 +4,7 @@ import { useUserData } from "../contexts/UserDataContext";
 type AccountProps = {};
 
 const Account = (props: AccountProps) => {
-	const { setUserData } = useUserData();
+	const { userData, setUserData } = useUserData();
 	console.log(props);
 
 	function clearLocalStorage() {
@@ -20,6 +20,19 @@ const Account = (props: AccountProps) => {
 			rejectedRecipes: [],
 		});
 	}
+
+	const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUserData((prevUserData) => {
+			return {
+				...prevUserData,
+				userSettings: {
+					...prevUserData.userSettings,
+					lastSearchQuery: e.target.value,
+				},
+			};
+		});
+	};
+
 	return (
 		<ViewLayout>
 			<div>
@@ -29,6 +42,11 @@ const Account = (props: AccountProps) => {
 				>
 					Clear Local Storage
 				</button>
+				<input
+					className=''
+					value={userData.userSettings.lastSearchQuery}
+					onChange={(e) => handleSearchQueryChange(e)}
+				/>
 			</div>
 		</ViewLayout>
 	);

@@ -15,10 +15,16 @@ const Home = (props: HomeProps) => {
 		<>
 			<ViewLayout>
 				{loadingState.status === "success" ? (
-					<RecipeSlideController
-						recipeCollection={recipeCollection}
-						setRecipeCollection={setRecipeCollection}
-					/>
+					recipeCollection.length != 0 ? (
+						<RecipeSlideController
+							recipeCollection={recipeCollection}
+							setRecipeCollection={setRecipeCollection}
+						/>
+					) : (
+						<div className='w-full h-full bg-slate-700 flex flex-row justify-center items-center text-2xl'>
+							No (new) results found for the given search query. Try something else!
+						</div>
+					)
 				) : (
 					<div className='w-full h-full bg-slate-700 flex flex-row justify-center items-center text-2xl'>
 						{loadingState.status === "loading" ? (
