@@ -4,10 +4,8 @@ import getApiUrl from "./getApiUrl";
 async function getRecipes(params = {}): Promise<RecipeFromApi[]> {
 	const apiUrl = getApiUrl(params, "recipes/v2");
 	try {
-		// Send a GET request to the API endpoint
 		const response = await fetch(apiUrl);
 
-		// Check if the request was successful (status code 200)
 		if (response.ok) {
 			const data: ResponseFromApi = await response.json();
 			const recipeData: RecipeFromApi[] = data?.hits?.map((e: DataFromApi) => e.recipe);

@@ -20,9 +20,9 @@ const Home = () => {
 	});
 
 	useEffect(() => {
-		async function fetchRecipeData() {
+		async function fetchRecipeData(params = {}) {
 			try {
-				const fetchedData = await getRecipes();
+				const fetchedData = await getRecipes(params);
 				const interactedRecipes = [...userData.savedRecipes, ...userData.rejectedRecipes];
 				const filteredData = removeArrayDuplicates(fetchedData, interactedRecipes, "uri");
 				setRecipeCollection(filteredData);
@@ -41,7 +41,7 @@ const Home = () => {
 			}
 		}
 
-		fetchRecipeData();
+		fetchRecipeData({ type: "public", q: "vegetarian" });
 	}, []);
 
 	return (
@@ -54,7 +54,15 @@ const Home = () => {
 					/>
 				) : (
 					<div className='w-full h-full bg-slate-700 flex flex-row justify-center items-center text-2xl'>
-						Fetching your data... <br /> Please wait...
+						{loadingState.status === "loading" ? (
+							<>
+								"Fetching your data... <br /> Please wait..."
+							</>
+						) : (
+							<>
+								"Something went wrong... <br /> Please try later again"
+							</>
+						)}
 					</div>
 				)}
 			</ViewLayout>
