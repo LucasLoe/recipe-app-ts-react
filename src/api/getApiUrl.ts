@@ -1,11 +1,14 @@
 import getServerParams from "./getServerParams";
 export default function getApiUrl(params: { [key: string]: any }, endpoint: string) {
-	console.log(params)
-	const { url} = getServerParams();
-	 // const queryParams = new URLSearchParams({ app_id, app_key, ...params });
+	let apiUrl;
+	const { app_id, app_key, app_status, url } = getServerParams();
 
-	// const apiUrl = `${url}${endpoint}?${queryParams.toString()}`;
-	const apiUrl = url + endpoint;
+	if (app_status === "production") {
+		const queryParams = new URLSearchParams({ app_id, app_key, ...params });
+		apiUrl = `${url}${endpoint}?${queryParams.toString()}`;
+	} else {
+		apiUrl = url + endpoint;
+	}
 
 	return apiUrl;
 }
