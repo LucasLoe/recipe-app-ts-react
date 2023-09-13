@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
+import React, { useState, createContext, useContext, useEffect, useRef } from "react";
 import { LoadingState, RecipeFromApi } from "../types";
 import getRecipes from "../api/getRecipes";
 import { useUserData } from "./UserDataContext";
@@ -24,33 +24,43 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 		status: "loading",
 		error: undefined,
 	});
+	const isFetchingData = useRef(false);
 
 	useEffect(() => {
 		async function fetchRecipeData(params = {}) {
-			try {
-				const fetchedData = await getRecipes(params);
-				setRecipeCollection(fetchedData);
-				setLoadingState({
-					status: "success",
-					error: undefined,
-				});
-			} catch (error) {
-				console.log(
-					`The following error occured while trying to fetch recipe data from the Edamam API: ${error}`
-				);
-				setLoadingState({
-					status: "failure",
-					error: error,
-				});
+			if (isFetchingData.current) {
+				return;
+			} else {
+				try {
+					isFetchingData.current = true;
+					const fetchedData = await getRecipes(params);
+					setRecipeCollection(fetchedData);
+					setLoadingState({
+						status: "success",
+						error: undefined,
+					});
+				} catch (error) {
+					console.log(
+						`The following error occured while trying to fetch recipe data from the Edamam API: ${error}`
+					);
+					setLoadingState({
+						status: "failure",
+						error: error,
+					});
+				} finally {
+					isFetchingData.current = false;
+				}
 			}
 		}
-
-		fetchRecipeData({
-			type: "public",
-			q: userData.userSettings.lastSearchQuery || "meal",
-			random: true,
-		});
-	}, [userData.userSettings]);
+		if (recipeCollection.length < 2) {
+			fetchRecipeData({
+				type: "public",
+				q: userData.userSettings.lastSearchQuery || "meal",
+				random: true,
+			});
+			console.log("fetch request triggered");
+		}
+	}, [userData.userSettings, recipeCollection]);
 
 	return (
 		<RecipeCollectionContext.Provider

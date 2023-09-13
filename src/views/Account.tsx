@@ -42,6 +42,23 @@ const Account = () => {
 		});
 	}
 
+	function handleEnterKey(e: React.KeyboardEvent) {
+		if (e.key === "Enter") {
+			if (debouncedSearchQuery != "") {
+				setUserData((prevUserData) => {
+					return {
+						...prevUserData,
+						userSettings: {
+							...prevUserData.userSettings,
+							lastSearchQuery: debouncedSearchQuery,
+						},
+					};
+				});
+				setCurrentGlobalView(GlobalViewKeys.home);
+			}
+		}
+	}
+
 	return (
 		<ViewLayout>
 			<div className='flex flex-col justify-start py-2 px-6'>
@@ -50,6 +67,7 @@ const Account = () => {
 						className='px-4 py-2 my-2 h-12 grow outline outline-amber-50 outline-2 bg-transparent appearance-none rounded text-amber-50'
 						value={searchQuery != "" ? searchQuery : ""}
 						onChange={(e) => setSearchQuery(e.target.value)}
+						onKeyDown={(e) => handleEnterKey(e)}
 					/>
 					<FontAwesomeIcon
 						onClick={() => setCurrentGlobalView(GlobalViewKeys.home)}
