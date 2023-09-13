@@ -19,7 +19,7 @@ const RecipePreviewItem = (props: RecipePreviewItemProps) => {
 const RecipeCollection = (props: RecipeCollectionProps) => {
 	const { userData } = useUserData();
 	const recipeCollection = userData.savedRecipes;
-	console.log(props)
+	console.log(props);
 	return (
 		<ViewLayout>
 			{recipeCollection.length != 0 ? (

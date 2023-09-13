@@ -3,9 +3,7 @@ import ViewLayout from "../components/layouts/ViewLayout";
 import { useUserData } from "../contexts/UserDataContext";
 import { useDebounce } from "../hooks/useDebounce";
 
-type AccountProps = {};
-
-const Account = (props: AccountProps) => {
+const Account = () => {
 	const { userData, setUserData } = useUserData();
 	const [searchQuery, setSearchQuery] = useState("");
 	const debouncedSearchQuery = useDebounce(searchQuery, 1000);
@@ -39,7 +37,7 @@ const Account = (props: AccountProps) => {
 
 	return (
 		<ViewLayout>
-			<div className="flex flex-col justify-center items-center">
+			<div className='flex flex-col justify-center items-center'>
 				<button
 					className='w-fit px-2 py-1 my-2 rounded bg-red-600 text-amber-50'
 					onClick={() => clearLocalStorage()}
