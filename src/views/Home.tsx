@@ -1,5 +1,4 @@
 import ViewLayout from "../components/layouts/ViewLayout";
-import Carousel from "../components/Carousel";
 import getRecipes from "../api/getRecipes";
 import { RecipeFromApi } from "../types";
 import { useEffect, useState } from "react";
@@ -11,6 +10,7 @@ type LoadingState = {
 	status: "loading" | "success" | "failure";
 	error: unknown | string;
 };
+
 const Home = () => {
 	const [recipeCollection, setRecipeCollection] = useState<RecipeFromApi[]>([]);
 	const { userData } = useUserData();
@@ -23,7 +23,8 @@ const Home = () => {
 		async function fetchRecipeData() {
 			try {
 				const fetchedData = await getRecipes();
-				const filteredData = removeArrayDuplicates(fetchedData, userData.savedRecipes, 'uri');
+				const interactedRecipes = [...userData.savedRecipes, ...userData.rejectedRecipes];
+				const filteredData = removeArrayDuplicates(fetchedData, interactedRecipes, "uri");
 				setRecipeCollection(filteredData);
 				setLoadingState({
 					status: "success",

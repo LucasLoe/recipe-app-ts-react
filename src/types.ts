@@ -23,6 +23,7 @@ export type UserData = {
 	username: string;
 	userSettings: UserSettings;
 	savedRecipes: RecipeFromApi[];
+	rejectedRecipes: RecipeFromApi[];
 };
 
 export type RecipeFromApi = {

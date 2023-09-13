@@ -5,6 +5,7 @@ type AccountProps = {};
 
 const Account = (props: AccountProps) => {
 	const { setUserData } = useUserData();
+	console.log(props)
 
 	function clearLocalStorage() {
 		setUserData({
@@ -15,6 +16,7 @@ const Account = (props: AccountProps) => {
 				donts: [],
 			},
 			savedRecipes: [],
+			rejectedRecipes: []
 		});
 	}
 	return (

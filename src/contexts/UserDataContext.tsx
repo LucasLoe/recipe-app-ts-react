@@ -24,6 +24,7 @@ const UserDataProvider = (props: UserDataProviderProps) => {
 			donts: [],
 		},
 		savedRecipes: [],
+		rejectedRecipes: [],
 	});
 
 	return (

@@ -1,5 +1,5 @@
 import { RecipeFromApi } from "../types";
-import { Children, ReactNode } from "react";
+import { ReactNode } from "react";
 
 type RecipeSlideProps = {
 	recipe: RecipeFromApi;
@@ -47,11 +47,10 @@ const RecipeSlide = (props: RecipeSlideProps) => {
 				src={recipe.images.LARGE?.url || recipe.images.REGULAR?.url}
 				className='w-full h-full object-cover'
 			></img>
-
+			{props.children}
 			<div className='absolute bg-slate-800 top-[70%] w-full h-[30%] opacity-80'>
 				<div className='w-full h-full relative px-4 py-4 flex flex-col justify-between'>
-					{props.children}
-					<a className="w-fit" href={recipe.url} target='_blank'>
+					<a className='w-fit' href={recipe.url} target='_blank'>
 						<RecipeTitle title={recipe.label} />
 					</a>
 					<RecipeShortInformation
