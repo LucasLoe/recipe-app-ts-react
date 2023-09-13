@@ -1,48 +1,15 @@
 import ViewLayout from "../components/layouts/ViewLayout";
-import getRecipes from "../api/getRecipes";
-import { RecipeFromApi } from "../types";
-import { useEffect, useState } from "react";
+import { RecipeFromApi, LoadingState } from "../types";
 import RecipeSlideController from "../components/RecipeSlideController";
-import { useUserData } from "../contexts/UserDataContext";
-import removeArrayDuplicates from "../functions/removeArrayDuplicates";
 
-type LoadingState = {
-	status: "loading" | "success" | "failure";
-	error: unknown | string;
+type HomeProps = {
+	recipeCollection: RecipeFromApi[];
+	setRecipeCollection: React.Dispatch<React.SetStateAction<RecipeFromApi[]>>;
+	loadingState: LoadingState;
 };
 
-const Home = () => {
-	const [recipeCollection, setRecipeCollection] = useState<RecipeFromApi[]>([]);
-	const { userData } = useUserData();
-	const [loadingState, setLoadingState] = useState<LoadingState>({
-		status: "loading",
-		error: "",
-	});
-
-	useEffect(() => {
-		async function fetchRecipeData(params = {}) {
-			try {
-				const fetchedData = await getRecipes(params);
-				const interactedRecipes = [...userData.savedRecipes, ...userData.rejectedRecipes];
-				const filteredData = removeArrayDuplicates(fetchedData, interactedRecipes, "uri");
-				setRecipeCollection(filteredData);
-				setLoadingState({
-					status: "success",
-					error: undefined,
-				});
-			} catch (error) {
-				console.log(
-					`The following error occured while trying to fetch recipe data from the Edamam API: ${error}`
-				);
-				setLoadingState({
-					status: "failure",
-					error: error,
-				});
-			}
-		}
-
-		fetchRecipeData({ type: "public", q: "vegetarian" });
-	}, []);
+const Home = (props: HomeProps) => {
+	const { recipeCollection, setRecipeCollection, loadingState } = props;
 
 	return (
 		<>

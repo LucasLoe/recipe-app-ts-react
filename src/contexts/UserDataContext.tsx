@@ -22,6 +22,7 @@ const UserDataProvider = (props: UserDataProviderProps) => {
 			allergies: [],
 			dos: [],
 			donts: [],
+			lastSearchQuery: "",
 		},
 		savedRecipes: [],
 		rejectedRecipes: [],

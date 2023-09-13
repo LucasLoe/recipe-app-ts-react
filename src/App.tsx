@@ -1,22 +1,34 @@
-import getRecipes from "./api/getRecipes";
+import { useMemo } from "react";
 import Home from "./views/Home";
 import RecipeCollection from "./views/RecipeCollection";
 import Account from "./views/Account";
-import { GlobalViewKeys } from "./types";
+import { GlobalViewKeys, RecipeFromApi } from "./types";
 import { useView } from "./contexts/ViewContext";
-
-const Views = {
-	home: <Home />,
-	recipes: <RecipeCollection />,
-	account: <Account />,
-} satisfies Record<GlobalViewKeys, JSX.Element>;
+import { useRecipeCollection } from "./contexts/RecipeCollectionContext";
+import { useUserData } from "./contexts/UserDataContext";
+import removeArrayDuplicates from "./functions/removeArrayDuplicates";
 
 function App() {
+	const { recipeCollection, setRecipeCollection, loadingState } = useRecipeCollection();
+	const { userData } = useUserData();
 	const { currentGlobalView } = useView();
-	getRecipes({
-		type: "public",
-		q: "chicken",
-	});
+	const filteredRecipes = useMemo<RecipeFromApi[]>(() => {
+		let interactedRecipes = [...userData.savedRecipes, ...userData.rejectedRecipes];
+		return removeArrayDuplicates(recipeCollection, interactedRecipes, "uri");
+	}, [userData, recipeCollection]);
+
+	const Views = {
+		home: (
+			<Home
+				recipeCollection={filteredRecipes}
+				setRecipeCollection={setRecipeCollection}
+				loadingState={loadingState}
+			/>
+		),
+		recipes: <RecipeCollection />,
+		account: <Account />,
+	} satisfies Record<GlobalViewKeys, JSX.Element>;
+
 	return (
 		<div className='bg-slate-700 w-screen min-h-screen'>
 			<div className='max-w-2xl mx-auto shadow-xl'>{Views[currentGlobalView]}</div>

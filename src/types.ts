@@ -4,6 +4,11 @@ export enum GlobalViewKeys {
 	account = "account",
 }
 
+export type LoadingState = {
+	status: "loading" | "success" | "failure";
+	error: unknown | string;
+};
+
 export type Recipe = {
 	name: string;
 	duration: number;
@@ -17,6 +22,7 @@ export type UserSettings = {
 	allergies: string[];
 	dos: string[];
 	donts: string[];
+	lastSearchQuery: string;
 };
 
 export type UserData = {
