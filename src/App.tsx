@@ -30,8 +30,8 @@ function App() {
 	} satisfies Record<GlobalViewKeys, JSX.Element>;
 
 	return (
-		<div className='bg-slate-700 w-screen min-h-screen'>
-			<div className='max-w-2xl mx-auto shadow-xl'>{Views[currentGlobalView]}</div>
+		<div className='bg-slate-700 w-screen h-screen'>
+			<div className='max-w-2xl mx-auto h-full bg-red-400'>{Views[currentGlobalView]}</div>
 		</div>
 	);
 }
