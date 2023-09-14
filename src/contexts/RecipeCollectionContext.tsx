@@ -34,11 +34,19 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 				try {
 					isFetchingData.current = true;
 					const fetchedData = await getRecipes(params);
-					setRecipeCollection(fetchedData);
-					setLoadingState({
-						status: "success",
-						error: undefined,
-					});
+					if (fetchedData.length >= 1) {
+						setRecipeCollection(fetchedData);
+						setLoadingState({
+							status: "success",
+							error: undefined,
+						});
+					} else {
+						setRecipeCollection(fetchedData);
+						setLoadingState({
+							status: "failure",
+							error: "Your current search settings provide no results. Try relaxing them",
+						});
+					}
 				} catch (error) {
 					console.log(
 						`The following error occured while trying to fetch recipe data from the Edamam API: ${error}`
@@ -52,7 +60,7 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 				}
 			}
 		}
-		if (recipeCollection.length < 2) {
+		if (recipeCollection.length < 1 && loadingState.status != "failure") {
 			fetchRecipeData({
 				type: "public",
 				q: userData.userSettings.lastSearchQuery || "meal",
@@ -61,6 +69,48 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 			console.log("fetch request triggered");
 		}
 	}, [userData.userSettings, recipeCollection]);
+
+	useEffect(() => {
+		async function fetchRecipeData(params = {}) {
+			if (isFetchingData.current) {
+				return;
+			} else {
+				try {
+					isFetchingData.current = true;
+					const fetchedData = await getRecipes(params);
+					if (fetchedData.length >= 1) {
+						setRecipeCollection(fetchedData);
+						setLoadingState({
+							status: "success",
+							error: undefined,
+						});
+					} else {
+						setRecipeCollection(fetchedData);
+						setLoadingState({
+							status: "failure",
+							error: "Your current search settings provide no results. Try relaxing them",
+						});
+					}
+				} catch (error) {
+					console.log(
+						`The following error occured while trying to fetch recipe data from the Edamam API: ${error}`
+					);
+					setLoadingState({
+						status: "failure",
+						error: error,
+					});
+				} finally {
+					isFetchingData.current = false;
+				}
+			}
+		}
+		fetchRecipeData({
+			type: "public",
+			q: userData.userSettings.lastSearchQuery || "meal",
+			random: true,
+		});
+		console.log("fetch request triggered");
+	}, [userData.userSettings]);
 
 	return (
 		<RecipeCollectionContext.Provider

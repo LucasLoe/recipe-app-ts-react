@@ -1,5 +1,6 @@
 import { RecipeFromApi } from "../types";
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
 
 type RecipeSlideProps = {
 	recipe: RecipeFromApi;
@@ -42,7 +43,13 @@ const RecipeSlide = (props: RecipeSlideProps) => {
 	const { recipe } = props;
 
 	return (
-		<div className='relative w-full h-full text-amber-50'>
+		<motion.div
+			initial={{ x: 300, opacity: 0 }}
+			animate={{ x: 0, opacity: 1 }}
+			exit={{ x: -300, opacity: 0 }}
+			key={recipe.label}
+			className='relative w-full h-full text-amber-50'
+		>
 			<img
 				src={recipe.images.LARGE?.url || recipe.images.REGULAR?.url}
 				className='w-full h-full object-cover'
@@ -60,7 +67,7 @@ const RecipeSlide = (props: RecipeSlideProps) => {
 					/>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

@@ -51,12 +51,12 @@ const RecipePopUp = (props: RecipePopUpProps) => {
 			{activeRecipe && (
 				<motion.div
 					ref={windowRef}
-					className='absolute my-2 box-border w-[90%] h-[80%] bg-slate-700 z-50 rounded p-4 bg-opacity-90 text-amber-50 overflow-y-scroll'
+					className='absolute my-2 box-border w-[90%] h-[80%] bg-slate-800 z-50 rounded p-4 bg-opacity-[95%] text-amber-50 overflow-y-scroll'
 					initial={{ opacity: 0, scale: 0 }}
 					animate={{ opacity: 1, scale: 1 }}
 					exit={{ opacity: 0, scale: 0 }}
 				>
-					<div className='mr-0 outline outline-1 outline-amber-50 my-4 p-0 mx-auto bg-slate-700 shadow-xl w-8 h-8 rounded flex flex-row justify-center items-center'>
+					<div className='mr-0 outline outline-1 outline-amber-50 my-4 p-0 mx-auto bg-slate-800 shadow-xl w-8 h-8 rounded flex flex-row justify-center items-center'>
 						<FontAwesomeIcon
 							className='text-amber-50 w-4 h-4'
 							icon={faX}

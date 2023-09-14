@@ -5,6 +5,7 @@ import RecipePopUp from "../components/RecipePopUp";
 import { useState, Dispatch, SetStateAction } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 
 type RecipePreviewItemProps = {
 	recipe: RecipeFromApi;
@@ -13,11 +14,31 @@ type RecipePreviewItemProps = {
 	deleteRecipe: (e: React.MouseEvent, recipe: RecipeFromApi) => void;
 };
 
+const animatedRecipeContainer = {
+	hidden: { opacity: 1 },
+	visible: {
+		opacity: 1,
+		transition: {
+			delayChildren: 0.2,
+			staggerChildren: 0.05,
+		},
+	},
+};
+
+const animatedRecipeItem = {
+	hidden: { y: 20, opacity: 0 },
+	visible: {
+		y: 0,
+		opacity: 1,
+	},
+};
+
 const RecipePreviewItem = (props: RecipePreviewItemProps) => {
 	const { recipe, setActiveRecipe, deleteRecipe } = props;
 	return (
-		<div
+		<motion.div
 			onClick={() => setActiveRecipe(props.recipe)}
+			variants={animatedRecipeItem}
 			className='relative w-[40%] max-w-sm m-2 h-40 rounded-lg text-amber-50 font-light flex flex-col'
 		>
 			<FontAwesomeIcon
@@ -29,7 +50,7 @@ const RecipePreviewItem = (props: RecipePreviewItemProps) => {
 			<p className='bg-slate-800 opacity-70 px-2 py-1 text-center overflow-hidden rounded-b-lg'>
 				{recipe.label}
 			</p>
-		</div>
+		</motion.div>
 	);
 };
 
@@ -59,12 +80,16 @@ const RecipeCollection = () => {
 				savedRecipes: updatedRecipes,
 			};
 		});
-		console.log("delete triggered");
 	}
 
 	return (
 		<ViewLayout>
-			<div className='px-4 py-8 w-full h-full box-border flex flex-col items-center'>
+			<motion.div
+				className='px-4 py-0 w-full h-full box-border flex flex-col items-center bg-slate-600'
+				variants={animatedRecipeContainer}
+				initial='hidden'
+				animate='visible'
+			>
 				<RecipePopUp activeRecipe={activeRecipe} setActiveRecipe={setActiveRecipe} />
 
 				{recipeCollection.length !== 0 ? (
@@ -84,7 +109,7 @@ const RecipeCollection = () => {
 				) : (
 					<EmptyRecipeCollectionSlide />
 				)}
-			</div>
+			</motion.div>
 		</ViewLayout>
 	);
 };
