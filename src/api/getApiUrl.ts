@@ -1,5 +1,6 @@
 import getServerParams from "./getServerParams";
 import buildParams from "../functions/buildParams";
+import { ApiParams } from "../types";
 
 export default function getApiUrl(params: { [key: string]: any }, endpoint: string) {
 	let apiUrl;
@@ -12,7 +13,7 @@ export default function getApiUrl(params: { [key: string]: any }, endpoint: stri
 				result[key] = params[key];
 				return result;
 			}, {} as { [key: string]: any[] });
-		const queryParams = buildParams({ app_id, app_key, ...filteredParams });
+		const queryParams = buildParams({ app_id, app_key, ...filteredParams } as ApiParams);
 		console.log(queryParams);
 		apiUrl = `${url}${endpoint}?${queryParams.toString()}`;
 	} else {

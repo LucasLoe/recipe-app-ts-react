@@ -1,11 +1,11 @@
 export default function getServerParams() {
 	let baseUrl;
 	//@ts-ignore
-	const app_id = import.meta.env.VITE_APP_ID;
+	const app_id:string = import.meta.env.VITE_APP_ID;
 	//@ts-ignore
-	const app_key = import.meta.env.VITE_APP_KEY;
+	const app_key:string = import.meta.env.VITE_APP_KEY;
 	//@ts-ignore
-	const app_status = import.meta.env.VITE_APP_STATUS;
+	const app_status:string = import.meta.env.VITE_APP_STATUS;
 
 	if (app_status === "production") {
 		baseUrl = "https://api.edamam.com/api/";

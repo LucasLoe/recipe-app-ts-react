@@ -27,6 +27,11 @@ export type UserSettings = {
 	health: Array<keyof typeof HealthTags>;
 };
 
+export type ApiParams = UserSettings & {
+	app_key: string
+	app_id: string
+}
+
 export type UserData = {
 	username: string;
 	userSettings: UserSettings;

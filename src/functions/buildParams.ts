@@ -1,4 +1,6 @@
-export default function buildParams(data) {
+import { ApiParams } from "../types";
+
+export default function buildParams(data: ApiParams) {
 	const params = new URLSearchParams();
 
 	Object.entries(data).forEach(([key, value]) => {
