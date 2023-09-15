@@ -50,72 +50,78 @@ const RecipePopUp = (props: RecipePopUpProps) => {
 		<AnimatePresence>
 			{activeRecipe && (
 				<motion.div
-					ref={windowRef}
-					className='absolute my-2 box-border w-[90%] h-[80%] bg-slate-800 z-50 rounded p-4 bg-opacity-[95%] text-amber-50 overflow-y-scroll'
 					initial={{ opacity: 0, scale: 0 }}
 					animate={{ opacity: 1, scale: 1 }}
 					exit={{ opacity: 0, scale: 0 }}
+					className='absolute w-full h-full bg-slate-800 bg-opacity-50 mx-auto right-0 left-0 z-50'
 				>
-					<div className='mr-0 outline outline-1 outline-amber-50 my-4 p-0 mx-auto bg-slate-800 shadow-xl w-8 h-8 rounded flex flex-row justify-center items-center'>
-						<FontAwesomeIcon
-							className='text-amber-50 w-4 h-4'
-							icon={faX}
-							onClick={() => setActiveRecipe(null)}
-						/>
-					</div>
-					<img
-						className=' w-full h-60 object-cover rounded'
-						src={activeRecipe?.images?.LARGE?.url || activeRecipe?.images?.REGULAR?.url}
-					/>
-					<h1 className='text-3xl my-4 tracking-wide'>{activeRecipe.label}</h1>
-					<Subheading label='Metadata' />
-					<Row>
-						<p className='mr-2'>Calories:</p>
-						<p>
-							{activeRecipe.yield != 0
-								? Math.round(activeRecipe.calories / activeRecipe.yield)
-								: Math.round(activeRecipe.calories)}
-							{" kcal"}
-						</p>
-					</Row>
-					<Row>
-						<p className='mr-2'>Labels:</p>
-						<div>
-							{activeRecipe.cautions.length != 0
-								? activeRecipe.cautions.map((elem, idx) => {
-										return <p key={idx}>{elem}</p>;
-								  })
-								: null}
-						</div>
-					</Row>
-					{activeRecipe.ingredientLines ? (
-						<>
-							<Subheading
-								label={`Ingredients (${activeRecipe.yield != 0 ? activeRecipe.yield : 1} servings)`}
+					<div
+						ref={windowRef}
+						className='my-2 mx-auto box-border w-[90%] h-[90%] bg-slate-800  rounded p-4 bg-opacity-[90%] text-amber-50 overflow-y-scroll'
+					>
+						<div className='mr-0 outline outline-1 outline-amber-50 my-4 p-0 mx-auto bg-slate-800 shadow-xl w-8 h-8 rounded flex flex-row justify-center items-center'>
+							<FontAwesomeIcon
+								className='text-amber-50 w-4 h-4'
+								icon={faX}
+								onClick={() => setActiveRecipe(null)}
 							/>
-							<Row>
-								<div>
-									{activeRecipe.ingredientLines.map((ingredient, idx) => {
-										return (
-											<p className='mb-2 font-light' key={idx}>
-												<FontAwesomeIcon
-													className='text-amber-50 bg-transparent mr-2'
-													icon={faMinus}
-												/>
-												{ingredient}
-											</p>
-										);
-									})}
-								</div>
-							</Row>
-						</>
-					) : null}
-					<Subheading label='Instructions' />
-					<Row>
-						<a href={activeRecipe.url} target='_blank'>
-							Click here for the recipe instructions
-						</a>
-					</Row>
+						</div>
+						<img
+							className=' w-full h-60 object-cover rounded'
+							src={activeRecipe?.images?.LARGE?.url || activeRecipe?.images?.REGULAR?.url}
+						/>
+						<h1 className='text-3xl my-4 tracking-wide'>{activeRecipe.label}</h1>
+						<Subheading label='Metadata' />
+						<Row>
+							<p className='mr-2'>Calories:</p>
+							<p>
+								{activeRecipe.yield != 0
+									? Math.round(activeRecipe.calories / activeRecipe.yield)
+									: Math.round(activeRecipe.calories)}
+								{" kcal"}
+							</p>
+						</Row>
+						<Row>
+							<p className='mr-2'>Labels:</p>
+							<div>
+								{activeRecipe.cautions.length != 0
+									? activeRecipe.cautions.map((elem, idx) => {
+											return <p key={idx}>{elem}</p>;
+									  })
+									: null}
+							</div>
+						</Row>
+						{activeRecipe.ingredientLines ? (
+							<>
+								<Subheading
+									label={`Ingredients (${
+										activeRecipe.yield != 0 ? activeRecipe.yield : 1
+									} servings)`}
+								/>
+								<Row>
+									<div>
+										{activeRecipe.ingredientLines.map((ingredient, idx) => {
+											return (
+												<p className='mb-2 font-light' key={idx}>
+													<FontAwesomeIcon
+														className='text-amber-50 bg-transparent mr-2'
+														icon={faMinus}
+													/>
+													{ingredient}
+												</p>
+											);
+										})}
+									</div>
+								</Row>
+							</>
+						) : null}
+						<Subheading label='Instructions' />
+						<Row>
+							<a href={activeRecipe.url} target='_blank'>
+								Click here for the recipe instructions
+							</a>
+						</Row>
+					</div>
 				</motion.div>
 			)}
 		</AnimatePresence>
