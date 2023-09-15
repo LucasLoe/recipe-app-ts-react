@@ -37,6 +37,7 @@ export type UserData = {
 	userSettings: UserSettings;
 	savedRecipes: RecipeFromApi[];
 	rejectedRecipes: RecipeFromApi[];
+	versionNumber: number
 };
 
 export type RecipeFromApi = {

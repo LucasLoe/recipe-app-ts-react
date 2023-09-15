@@ -1,6 +1,7 @@
 import ViewLayout from "../components/UI/ViewLayout";
 import { useUserData } from "../contexts/UserDataContext";
 import LayoutRow from "../components/UI/LayoutRow";
+import getAppVersionNumber from "../functions/getAppVersionNumber";
 
 const Account = () => {
 	const { setUserData } = useUserData();
@@ -18,6 +19,7 @@ const Account = () => {
 			},
 			savedRecipes: [],
 			rejectedRecipes: [],
+			versionNumber: getAppVersionNumber(),
 		});
 	}
 

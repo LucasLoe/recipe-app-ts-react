@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { UserData } from "../types";
 import useLocalStorage from "../hooks/useLocalStorage";
+import getAppVersionNumber from "../functions/getAppVersionNumber";
 
 type UserDataProviderProps = {
 	children: React.ReactNode | React.ReactNode[];
@@ -16,7 +17,7 @@ export const UserDataContext = createContext<
 >(undefined);
 
 const UserDataProvider = (props: UserDataProviderProps) => {
-	const [userData, setUserData] = useLocalStorage<UserData>("recipe-app-ts-react", {
+	const [userData, setUserData] = useLocalStorage<UserData>("recipe-app-ts-react-v1", {
 		username: "",
 		userSettings: {
 			allergies: [],
@@ -28,6 +29,7 @@ const UserDataProvider = (props: UserDataProviderProps) => {
 		},
 		savedRecipes: [],
 		rejectedRecipes: [],
+		versionNumber: getAppVersionNumber()
 	});
 
 	return (
