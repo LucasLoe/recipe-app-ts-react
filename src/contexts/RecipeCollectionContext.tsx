@@ -26,6 +26,8 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 	});
 	const isFetchingData = useRef(false);
 
+	console.log(userData);
+
 	useEffect(() => {
 		async function fetchRecipeData(params = {}) {
 			if (isFetchingData.current) {
@@ -63,7 +65,9 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 		if (recipeCollection.length < 1 && loadingState.status != "failure") {
 			fetchRecipeData({
 				type: "public",
-				q: userData.userSettings.lastSearchQuery || "meal",
+				q: userData.userSettings.lastSearchQuery || "food",
+				health: userData.userSettings.health.length > 0 ? userData.userSettings.health : [],
+				mealType: userData.userSettings.mealType.length > 0 ? userData.userSettings.mealType : [],
 				random: true,
 			});
 			console.log("fetch request triggered");
@@ -107,6 +111,8 @@ const RecipeCollectionProvider = (props: RecipeCollectionProviderProps) => {
 		fetchRecipeData({
 			type: "public",
 			q: userData.userSettings.lastSearchQuery || "meal",
+			health: userData.userSettings.health.length > 0 ? userData.userSettings.health : [],
+			mealType: userData.userSettings.mealType.length > 0 ? userData.userSettings.mealType : [],
 			random: true,
 		});
 		console.log("fetch request triggered");

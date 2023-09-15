@@ -19,11 +19,11 @@ const Dialog = (props: DialogProps) => {
 			animate={{ scale: 1, opacity: 1 }}
 			exit={{ scale: 0, opacity: 0 }}
 			ref={dialogRef}
-			className={`absolute top-full right-0 my-2 py-4 px-6 rounded bg-slate-800 opacity-70 text-amber-50 "
+			className={`absolute top-full right-0 my-2 py-4 px-6 rounded bg-slate-800 opacity-70 text-amber-50 z-50 max-h-48 overflow-y-scroll shadow-2xl shadow-inner"
 			}`}
 		>
 			<p>{title}</p>
-            <div className="w-full bg-slate-700 h-[2px] mt-2 mb-4"></div>
+			<div className='w-full bg-slate-700 h-[2px] mt-2 mb-4 '></div>
 			{children}
 		</motion.div>
 	) : null;

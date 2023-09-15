@@ -1,4 +1,4 @@
-import ViewLayout from "../components/layouts/ViewLayout";
+import ViewLayout from "../components/UI/ViewLayout";
 import { RecipeFromApi, LoadingState } from "../types";
 import RecipeSlideController from "../components/RecipeSlideController";
 import UserQueryDialog from "../components/UserQueryDialog";

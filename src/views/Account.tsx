@@ -1,6 +1,6 @@
-import ViewLayout from "../components/layouts/ViewLayout";
+import ViewLayout from "../components/UI/ViewLayout";
 import { useUserData } from "../contexts/UserDataContext";
-import LayoutRow from "../components/layouts/LayoutRow";
+import LayoutRow from "../components/UI/LayoutRow";
 
 const Account = () => {
 	const { setUserData } = useUserData();
@@ -13,6 +13,8 @@ const Account = () => {
 				dos: [],
 				donts: [],
 				lastSearchQuery: "",
+				mealType: "lunch",
+				health: [],
 			},
 			savedRecipes: [],
 			rejectedRecipes: [],

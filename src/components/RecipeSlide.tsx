@@ -56,8 +56,10 @@ const RecipeSlide = (props: RecipeSlideProps) => {
 				src={recipe.images.LARGE?.url || recipe.images.REGULAR?.url}
 				className='w-full h-full object-cover'
 			/>
+
 			{props.children}
-			<div className='absolute bg-slate-800 top-[70%] w-full h-[30%] opacity-80'>
+
+			<div className='absolute bg-slate-800 top-[70%] w-full h-[30%] opacity-80 z-10'>
 				<div
 					className='w-full h-full relative px-4 py-4 flex flex-col justify-between'
 					onClick={() => setRecipeWithDetails(recipe)}

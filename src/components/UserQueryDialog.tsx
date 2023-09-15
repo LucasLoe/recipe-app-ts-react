@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useUserData } from "../contexts/UserDataContext";
-import LayoutRow from "./layouts/LayoutRow";
+import LayoutRow from "./UI/LayoutRow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -32,6 +32,20 @@ const UserQueryDialog = () => {
 		}
 	}
 
+	function resetAllFilters() {
+		setUserData((prevUserData) => {
+			return {
+				...prevUserData,
+				userSettings: {
+					...prevUserData.userSettings,
+					lastSearchQuery: "",
+					health: [],
+					mealType: "lunch",
+				},
+			};
+		});
+	}
+
 	return (
 		<>
 			<LayoutRow label='Search query:'>
@@ -46,6 +60,14 @@ const UserQueryDialog = () => {
 					icon={faArrowRight}
 					className='text-amber-50 h-4 outline outline-2 outline-amber-50 p-1  rounded'
 				/>
+			</LayoutRow>
+			<LayoutRow>
+				<button
+					className='w-fit text-sm h-8 px-2 py-1 mt-16 rounded outline outline-2 outline-red-400 bg-none text-red-400 ml-0 mr-auto shadow-2xl'
+					onClick={() => resetAllFilters()}
+				>
+					Reset all filters
+				</button>
 			</LayoutRow>
 		</>
 	);

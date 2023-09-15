@@ -27,7 +27,7 @@ type ButtonRowProps = {
 
 const ButtonRow = (props: ButtonRowProps) => {
 	return (
-		<div className='px-2 bg-slate-800 bg-opacity-70 rounded-full absolute right-2 top-2 flex flex-col justify-evenly items-center shadow-2xl'>
+		<div className='z-20 px-2 bg-slate-800 bg-opacity-70 rounded-full absolute right-2 top-2 flex flex-col justify-evenly items-center shadow-2xl'>
 			{props.children}
 		</div>
 	);

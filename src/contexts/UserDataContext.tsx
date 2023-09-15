@@ -23,6 +23,8 @@ const UserDataProvider = (props: UserDataProviderProps) => {
 			dos: [],
 			donts: [],
 			lastSearchQuery: "",
+			mealType: "lunch",
+			health: [],
 		},
 		savedRecipes: [],
 		rejectedRecipes: [],

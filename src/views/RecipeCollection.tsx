@@ -1,4 +1,4 @@
-import ViewLayout from "../components/layouts/ViewLayout";
+import ViewLayout from "../components/UI/ViewLayout";
 import { useUserData } from "../contexts/UserDataContext";
 import { RecipeFromApi } from "../types";
 import RecipePopUp from "../components/RecipePopUp";

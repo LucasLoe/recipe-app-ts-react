@@ -23,6 +23,8 @@ export type UserSettings = {
 	dos: string[];
 	donts: string[];
 	lastSearchQuery: string;
+	mealType: keyof typeof MealType;
+	health: Array<keyof typeof HealthTags>;
 };
 
 export type UserData = {
@@ -80,7 +82,7 @@ export type RecipeFromApi = {
 	co2EmissionsClass: string;
 	totalWeight: number;
 	cuisineType: string[];
-	mealType: string[];
+	mealType: MealType;
 	dishType: string[];
 	instructions: string[];
 	tags: string[];
@@ -131,3 +133,30 @@ export type ResponseFromApi = {
 	};
 	hits: DataFromApi[];
 };
+
+export enum MealType {
+	breakfast = "Breakfast",
+	dinner = "Dinner",
+	lunch = "Lunch",
+	snack = "Snack",
+	teatime = "Teatime",
+}
+
+export enum HealthTags {
+	"alcohol-free" = "Alcohol-Free",
+	"dairy-free" = "Dairy-Free",
+	"egg-free" = "Egg-Free",
+	"fish-free" = "Fish-Free",
+	"gluten-free" = "Gluten-Free",
+	"kidney-friendly" = "Kidney-Friendly",
+	"kosher" = "Kosher",
+	"low-potassium" = "Low Potassium",
+	"Mediterranean" = "Mediterranean",
+	"peanut-free" = "Peanut-Free",
+	"pecatarian" = "Pescatarian",
+	"pork-free" = "Pork-Free",
+	"sulfite-free" = "Sulfite-Free",
+	"vegan" = "Vegan",
+	"vegetarian" = "Vegetarian",
+	"wheat-free" = "Wheat-Free",
+}
